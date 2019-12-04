@@ -1,0 +1,122 @@
+<html>
+<header>
+<style>
+    #buttons {
+        margin-top: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    div.flexcontainer {
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    div.grid {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0px;
+/*
+        width: 30px;
+        height: 30px;
+*/
+    }
+    div.container {
+        border-style: solid;
+        display: grid;
+        grid-template-columns: repeat(16, 30px);
+        grid-template-rows: repeat(16, 30px);
+        grid-gap: 0px;
+    }
+</style>    
+</header>
+<body>
+<div id="buttons">
+<button type="button" id="reset">Reset</button>
+<button type="button" id="newgrid">Resize Grid</button>
+<button type="button" id="newcolour">Random Colour</button>
+</div>
+<div class="flexcontainer">
+<div class="container">
+</div>
+</div>
+</body>
+<script>
+let i;
+let o = 0;
+let p = 0;
+const container = document.querySelector('.container')
+while(p < 16){
+    i = 0;
+    while(i < 16){
+        let div = document.createElement('div');
+        div.setAttribute('id', o);
+        div.setAttribute('class', 'grid');
+        //div.textContent = "test";
+        container.appendChild(div);
+        i++
+        o++
+    }
+    p++
+}
+let griditems = document.querySelectorAll(".grid");
+griditems.forEach((griditem) => {
+    griditem.addEventListener('mouseover', () => {
+        griditem.style.backgroundColor="black"; 
+    })
+})
+let reset = document.querySelector('#reset');
+reset.addEventListener('click', () => {
+    griditems.forEach((griditem) => {
+        griditem.style.backgroundColor="white"; 
+    })
+})
+
+let newgrid = document.querySelector('#newgrid');
+newgrid.addEventListener('click', () => {
+    let size = prompt("Please choose a new size (any number between 1 and 240)");
+    if (size === null) {
+        return;
+    }
+    griditems = document.querySelectorAll(".grid");
+    griditems.forEach((griditem) => {
+        griditem.remove(); 
+    })
+    let u = 0;
+    o = 0;
+    while(u < size){
+        i = 0;
+        while(i < size){
+            let div = document.createElement('div');
+            div.setAttribute('id', o);
+            div.setAttribute('class', 'grid');
+            //div.textContent = "test";
+            container.appendChild(div);
+            i++
+            o++
+        }
+    u++
+    }
+let gridsize = 480 / size;
+container.style.gridTemplateColumns = `repeat(${size}, ${gridsize}px)`;
+container.style.gridTemplateRows = `repeat(${size}, ${gridsize}px)`;
+griditems = document.querySelectorAll(".grid");
+griditems.forEach((griditem) => {
+    griditem.addEventListener('mouseover', () => {
+        griditem.style.backgroundColor="black"; 
+    })
+})
+})
+let newcolour = document.querySelector('#newcolour');
+newcolour.addEventListener('click', () => {
+griditems = document.querySelectorAll(".grid");
+griditems.forEach((griditem) => {
+    griditem.addEventListener('mouseover', () => {
+        griditem.style.backgroundColor=`rgb(${Math.floor(Math.random() * 283.33)}, ${Math.floor(Math.random() * 283.33)}, ${Math.floor(Math.random() * 283.33)})`; 
+    })
+})  
+})
+</script>
+</html>
